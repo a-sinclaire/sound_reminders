@@ -3,7 +3,6 @@ from tkinter import ttk
 from playsound import playsound
 import time
 import threading
-import os
 from infi.systray import SysTrayIcon
 import tkinter as tk
 
@@ -59,11 +58,15 @@ def stop_program(systray):
 def mute_unmute(systray):
     global MUTE
     MUTE = not MUTE
+    if MUTE:
+        systray.update(hover_text="Sound Reminders (MUTED)", icon="D:/_Files/Programming/Python/soundReminders/Assets/bell_delete.ico")
+    else:
+        systray.update(hover_text="Sound Reminders", icon="D:/_Files/Programming/Python/soundReminders/Assets/bell.ico")
 
 
 if __name__ == "__main__":
     menu_options = (("Stop Sound Reminders", None, stop_program), ("MUTE/UNMUTE", None, mute_unmute),)
-    systray = SysTrayIcon("D:/_Files/Programming/Python/soundReminders/Assets/alarm_check.ico", "Sound Reminders", menu_options)
+    systray = SysTrayIcon("D:/_Files/Programming/Python/soundReminders/Assets/bell.ico", "Sound Reminders", menu_options)
     systray.start()
 
     x = threading.Thread(target=drink_thread, args=("drink_thread", lambda: STOP_THREADS, lambda: MUTE))
